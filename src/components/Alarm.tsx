@@ -21,9 +21,21 @@ export const Alarm: FC<AlarmProps> = ({
   time,
 }) => {
   return (
-    <Box display="flex" mb="1em" alignItems="center">
-      <Switch data-id={id} id={id} onChange={onChangeStatus} checked={active} />
+    <Box
+      data-testid="alarm-container"
+      display="flex"
+      mb="1em"
+      alignItems="center"
+    >
+      <Switch
+        data-testid="alarm-switch"
+        data-id={id}
+        id={id}
+        onChange={onChangeStatus}
+        checked={active}
+      />
       <TextField
+        data-testid="alarm-time"
         onChange={onChangeTime}
         value={time}
         label="Alarm clock"
@@ -38,7 +50,7 @@ export const Alarm: FC<AlarmProps> = ({
         }}
         sx={{ mx: '2em', width: '10em' }}
       />
-      <IconButton data-id={id} onClick={onDelele}>
+      <IconButton data-testid="alarm-delete" data-id={id} onClick={onDelele}>
         <Delete />
       </IconButton>
     </Box>

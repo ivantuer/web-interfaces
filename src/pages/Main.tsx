@@ -42,6 +42,9 @@ export const Main = () => {
   const removeAlarm = useCallback(
     async (e: React.MouseEvent<HTMLButtonElement>) => {
       const id = e.currentTarget.dataset.id as string;
+
+      console.log('DELETING', id);
+      console.log(alarms, id);
       await deleteAlarm(id);
       setAlarms((prev) => prev.filter((alarm) => alarm.id !== id));
     },
@@ -119,8 +122,12 @@ export const Main = () => {
   }, [currentTime, alarms]);
 
   useEffect(() => {
-    console.log('i am called twice');
-    getAlarms().then((alarms) => setAlarms(alarms.data));
+    (async () => {
+      const alarms = await getAlarms();
+      console.log(alarms);
+      setAlarms(alarms.data);
+    })();
+    // .then((alarms) => setAlarms(alarms.data));
   }, []);
 
   return (
@@ -131,7 +138,9 @@ export const Main = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Button onClick={createAlarm}>Add New Alarm</Button>
+        <Button data-testid="add-button" onClick={createAlarm}>
+          Add New Alarm
+        </Button>
         {currentTime}
       </Box>
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-perf/jsx-no-new-object-as-prop */
 import {
   Autocomplete,
   AutocompleteRenderInputParams,
@@ -50,7 +51,7 @@ export const SignUp = () => {
 
   const renderAutocompleteInput = useCallback(
     (params: AutocompleteRenderInputParams) => (
-      <TextField {...params} label="Gender" />
+      <TextField {...params} label="Gender" placeholder="Gender" />
     ),
     []
   );
@@ -84,6 +85,9 @@ export const SignUp = () => {
           fullWidth
           label="Name"
           mt="1em"
+          inputProps={{
+            'data-testid': 'name-field',
+          }}
         />
         <Box
           component={TextField}
@@ -92,6 +96,9 @@ export const SignUp = () => {
           fullWidth
           label="email"
           my="1em"
+          inputProps={{
+            'data-testid': 'email-field',
+          }}
         />
         <Box
           component={TextField}
@@ -100,6 +107,9 @@ export const SignUp = () => {
           fullWidth
           label="Password"
           mb="1em"
+          inputProps={{
+            'data-testid': 'password-field',
+          }}
         />
         <Autocomplete
           disablePortal
@@ -117,6 +127,9 @@ export const SignUp = () => {
           fullWidth
           mt="1em"
           InputLabelProps={dateInputLabelProps}
+          inputProps={{
+            'data-testid': 'date-field',
+          }}
         />
 
         <Box
@@ -126,6 +139,7 @@ export const SignUp = () => {
           variant="contained"
           fullWidth
           type="submit"
+          data-testid="button-field"
         >
           Sign Up
         </Box>

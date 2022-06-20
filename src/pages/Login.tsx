@@ -1,3 +1,4 @@
+/* eslint-disable react-perf/jsx-no-new-object-as-prop */
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { useCallback } from 'react';
@@ -44,18 +45,27 @@ export const Login = () => {
           Log In
         </Typography>
         <Box
+          //   data-testid="email-field"
           component={TextField}
           name="email"
           onChange={handleChange}
           fullWidth
+          inputProps={{
+            'data-testid': 'email-field',
+          }}
           label="email"
           my="1em"
         />
         <TextField
+          //   data-testid="password-field"
           fullWidth
+          type="password"
           name="password"
           onChange={handleChange}
           label="password"
+          inputProps={{
+            'data-testid': 'password-field',
+          }}
         />
         <Box
           component={Button}
@@ -63,6 +73,7 @@ export const Login = () => {
           mb="0.5em"
           variant="contained"
           fullWidth
+          data-testid="submit-button"
           type="submit"
         >
           Log In
