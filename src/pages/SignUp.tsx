@@ -51,7 +51,12 @@ export const SignUp = () => {
 
   const renderAutocompleteInput = useCallback(
     (params: AutocompleteRenderInputParams) => (
-      <TextField {...params} label="Gender" placeholder="Gender" />
+      <TextField
+        {...params}
+        name="gender"
+        label="Gender"
+        placeholder="Gender"
+      />
     ),
     []
   );

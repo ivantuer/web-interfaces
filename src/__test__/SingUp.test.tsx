@@ -2,19 +2,19 @@ import '@testing-library/jest-dom';
 
 import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import MockAdapter from 'axios-mock-adapter';
 
 import { SignUp } from '../pages/SignUp';
 import * as auth from '../services/auth';
+import client from '../services/axios';
 import { renderWithProviders } from './utils';
 
 const mockHistoryPush = jest.fn();
+const mock = new MockAdapter(client);
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockHistoryPush,
-}));
-jest.mock('../services/auth', () => ({
-  signUp: jest.fn().mockReturnValue(Promise.resolve({})),
 }));
 
 test('loads and displays all fields', async () => {
@@ -28,17 +28,16 @@ test('loads and displays all fields', async () => {
 });
 
 test('changes field', async () => {
-  const { getByTitle, getByRole, getByLabelText } = renderWithProviders(
-    <SignUp />
-  );
+  const { getByTestId } = renderWithProviders(<SignUp />);
 
-  const button = getByTitle('Open');
-  userEvent.click(button);
+  userEvent.type(getByTestId('email-field'), 'email@email.com');
+  userEvent.type(getByTestId('password-field'), 'password');
+  userEvent.type(getByTestId('name-field'), 'name');
+  userEvent.type(getByTestId('date-field'), '2000-00-00');
 
-  const option1 = getByRole('option');
-  userEvent.click(option1);
-
-  expect(getByLabelText('Gender')).toHaveValue('Man');
+  expect(getByTestId('email-field')).toHaveValue('email@email.com');
+  expect(getByTestId('password-field')).toHaveValue('password');
+  expect(getByTestId('name-field')).toHaveValue('name');
 });
 
 test('sign up', async () => {
@@ -51,11 +50,11 @@ test('sign up', async () => {
 
   userEvent.click(getByTestId('button-field'));
 
-  // @ts-ignore
-  const addStub = jest.spyOn(auth, 'signUp').mockReturnValueOnce({});
+  mock.onPost('http://localhost:5000/auth/sign-up').reply(200, {});
 
   await waitFor(() => {
-    expect(addStub).toBeCalled();
+    expect(mock.history.post.length).toBe(1);
+    expect(mockHistoryPush).toHaveBeenCalledWith('/', { replace: true });
   });
 });
 

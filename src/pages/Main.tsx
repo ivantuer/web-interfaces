@@ -44,7 +44,6 @@ export const Main = () => {
       const id = e.currentTarget.dataset.id as string;
 
       console.log('DELETING', id);
-      console.log(alarms, id);
       await deleteAlarm(id);
       setAlarms((prev) => prev.filter((alarm) => alarm.id !== id));
     },

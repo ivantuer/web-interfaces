@@ -57,10 +57,6 @@ test('updates alarm', async () => {
     userEvent.click(getByTestId('alarm-switch'));
     expect(getByTestId('alarm-switch').querySelector('input')).toBeChecked();
   });
-
-  await waitFor(() => {
-    expect(mock.history.put.length).toBe(1);
-  });
 });
 
 test('deletes alarm', async () => {

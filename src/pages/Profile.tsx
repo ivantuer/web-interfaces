@@ -41,11 +41,7 @@ export const Profile = () => {
 
   const renderAutocompleteInput = useCallback(
     (params: AutocompleteRenderInputParams) => (
-      <TextField
-        {...params}
-        inputProps={{ 'data-testid': 'gender-field' }}
-        label="Gender"
-      />
+      <TextField {...params} name="gender" label="Gender" />
     ),
     []
   );
@@ -83,6 +79,7 @@ export const Profile = () => {
         value={user?.email}
         disabled
         fullWidth
+        name="email"
         label="Email"
         my="1em"
         inputProps={{
